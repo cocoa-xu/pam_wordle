@@ -19,13 +19,13 @@ So, let's practice more on the game, [wordle](https://www.powerlanguage.co.uk/wo
 ```shell
 git clone --depth=1 https://github.com/cocoa-xu/pam_wordle
 mkdir -p build
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake -D CMAKE_BUILD_TYPE=Release ..
 make
 ```
 
 ## Installation
 By default, Debian/Ubuntu puts pam modules in the `/lib/security` directory. But this may not be your case if the OS 
-you're using checks pam modules from another location.
+you're using looks for pam modules from another location.
 
 If you're using Debian/Ubuntu, or if your OS also uses the `/lib/security` directory for the pam modules, then 
 ```shell
@@ -41,8 +41,8 @@ line to it.
 auth    sufficient   pam_wordle.so
 ```
 
-pam loads the modules in the order of their position in the `/etc/pam.d/sudo` file, i.e., if you put the `pam_wordle.so`
-at the first line, then pam will first try to use this module to do authentication. 
+pam loads the modules in the order of their positions in the `/etc/pam.d/sudo` file, i.e., if you put the `pam_wordle.so`
+in the first line, then pam will first try to use this module to do the authentication. 
 
 If you failed to figure out the correct word, pam will continue to use other modules (e.g., fallback to password).
 
@@ -52,4 +52,4 @@ However, if you want some challenge, change the `sufficient` in the config to `r
 auth    required   pam_wordle.so
 ```
 
-Now, if you failed to guess the correct word, you'll not be able to use `sudo`.
+Now, if you fail to guess the correct word, you'll not be able to use `sudo`.
