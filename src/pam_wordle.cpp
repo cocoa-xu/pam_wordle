@@ -71,7 +71,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
                 result += "\033[90;100m██\033[m ";
             }
         }
-        result += "\t";
+        result += "   ";
         for (int j = 0; j < 5; ++j) {
             if (answer[j] == guess[j]) {
                 result += "\033[92m";
