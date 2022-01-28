@@ -101,7 +101,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
         guess = "";
     }
 
-    fprintf(stderr, "Maximum number of guess reached. It was %s\r\n", answer.c_str());
+    fprintf(stderr, "Maximum number of guesses reached. It was %s\r\n", answer.c_str());
     return PAM_PERM_DENIED;
 }
 
