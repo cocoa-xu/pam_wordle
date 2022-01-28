@@ -1,6 +1,10 @@
 #ifndef PAM_WORDLE_H
 #define PAM_WORDLE_H
 
+#define PAM_SM_ACCOUNT
+#define PAM_SM_AUTH
+#define PAM_SM_PASSWORD
+
 #include <security/pam_appl.h>
 #include <security/pam_modules.h>
 #ifdef   OPENPAM
