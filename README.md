@@ -3,6 +3,8 @@ They say "practice makes perfect", and that is perhaps true.
 
 So, let's practice more on the game, [wordle](https://www.powerlanguage.co.uk/wordle/), in a daily manner! UwU
 
+![demo](assets/demo.png)
+
 ## Dependency
 - CMake >= 3.12
 - C++ Compiler
