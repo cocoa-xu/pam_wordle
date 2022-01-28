@@ -5,11 +5,31 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <fstream>
+#include <random>
 
 PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, const char **argv)
 {
-    int pam_code;
-    std::string answer = "hello";
+    std::ifstream ifs;
+    ifs.open("/usr/share/dict/words");
+    std::vector<std::string> dict;
+    if (ifs.is_open()) {
+        std::string line;
+        while(std::getline(ifs, line)) {
+            if (line.length() == 5) {
+                dict.push_back(line);
+            }
+        }
+    } else {
+        return PAM_PERM_DENIED;
+    }
+
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<size_t> dist(0, dict.size() - 1);
+    size_t random_index = dist(mt);
+
+    std::string answer = dict[random_index];
     std::map<char, bool> exists;
     for (auto &c : answer) {
         exists[c] = true;
