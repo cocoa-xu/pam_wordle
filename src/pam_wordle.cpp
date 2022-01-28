@@ -46,12 +46,12 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
         fprintf(stdout, "Your guess[%d/%d]: ", i + 1, num_guesses);
         std::cin >> guess;
 
-        if (guess.length() != 5) {
-            fprintf(stderr, "Please input a word with 5 letters.\r\n");
+        if (std::cin.eof()) {
             return PAM_PERM_DENIED;
         }
 
-        if (std::cin.eof()) {
+        if (guess.length() != 5) {
+            fprintf(stderr, "Please input a word with 5 letters.\r\n");
             return PAM_PERM_DENIED;
         }
 
