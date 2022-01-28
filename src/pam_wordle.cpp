@@ -1,6 +1,7 @@
 #include "pam_wordle.h"
 #include <stdio.h>
 #include <cstring>
+#include <algorithm>
 #include <string>
 #include <iostream>
 #include <map>
@@ -18,6 +19,8 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
         std::string word;
         while(std::getline(ifs, word)) {
             if (word.length() == 5) {
+                std::transform(word.begin(), word.end(), word.begin(),
+                               [](unsigned char c){ return std::tolower(c); });
                 available_words.push_back(word);
                 dict[word] = true;
             }
@@ -54,6 +57,9 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
             fprintf(stderr, "Please input a word with 5 letters.\r\n");
             return PAM_PERM_DENIED;
         }
+
+        std::transform(guess.begin(), guess.end(), guess.begin(),
+                       [](unsigned char c){ return std::tolower(c); });
 
         if (dict.find(guess) == dict.end()) {
             fprintf(stdout, "%s is not in word list\r\n", guess.c_str());
