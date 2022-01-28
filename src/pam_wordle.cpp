@@ -52,12 +52,24 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
         std::string result;
         for (int j = 0; j < 5; ++j) {
             if (answer[j] == guess[j]) {
-                result += "\033[92;102m██\033[m ";
+                result += "\033[92;102m██\033[m";
             } else if (exists[guess[j]]) {
                 result += "\033[93;103m██\033[m ";
             } else {
                 result += "\033[90;100m██\033[m ";
             }
+        }
+        result += "\t";
+        for (int j = 0; j < 5; ++j) {
+            if (answer[j] == guess[j]) {
+                result += "\033[92m";
+            } else if (exists[guess[j]]) {
+                result += "\033[93m";
+            } else {
+                result += "\033[90m";
+            }
+            result += guess[j];
+            result += "\033[m";
         }
         guesses.push_back(result);
 
