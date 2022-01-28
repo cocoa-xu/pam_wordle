@@ -28,4 +28,4 @@ target_link_libraries(pam_wordle
 )
 
 set_target_properties(pam_wordle PROPERTIES LINKER_LANGUAGE CXX)
-install(TARGETS pam_wordle RUNTIME DESTINATION "/usr/lib/pam")
+install(TARGETS pam_wordle DESTINATION "/lib/security")
