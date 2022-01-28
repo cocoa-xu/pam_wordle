@@ -51,6 +51,10 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
             return PAM_PERM_DENIED;
         }
 
+        if (std::cin.eof()) {
+            return PAM_PERM_DENIED;
+        }
+
         if (dict.find(guess) == dict.end()) {
             fprintf(stdout, "%s is not in word list\r\n", guess.c_str());
             i -= 1;
