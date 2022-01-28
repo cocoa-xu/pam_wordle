@@ -1,0 +1,9 @@
+image: ubuntu:20.04
+build:
+  stage: build
+  variables:
+    DEBIAN_FRONTEND: noninteractive
+  script:
+    - apt install -q -y
+    - apt install -y gcc g++ build-essential cmake libpam0g-dev
+    - mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && make "-j$(nproc)"
