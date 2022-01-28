@@ -1,4 +1,9 @@
 # pam_wordle
+
+| OS               | arch    | Build Status |
+|------------------|---------|--------------|
+| Ubuntu 20.04     | x86_64  | [![CI](https://github.com/cocoa-xu/pam_wordle/actions/workflows/linux-x86_64.yml/badge.svg)](https://github.com/cocoa-xu/pam_wordle/actions/workflows/linux-x86_64.yml) |
+
 They say "practice makes perfect", and that is perhaps true.
 
 So, let's practice more on the game, [wordle](https://www.powerlanguage.co.uk/wordle/), in a daily manner! UwU
