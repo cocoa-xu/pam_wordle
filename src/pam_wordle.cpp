@@ -12,12 +12,14 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
 {
     std::ifstream ifs;
     ifs.open("/usr/share/dict/words");
-    std::vector<std::string> dict;
+    std::vector<std::string> available_words;
+    std::map<std::string, bool> dict;
     if (ifs.is_open()) {
-        std::string line;
-        while(std::getline(ifs, line)) {
-            if (line.length() == 5) {
-                dict.push_back(line);
+        std::string word;
+        while(std::getline(ifs, word)) {
+            if (word.length() == 5) {
+                available_words.push_back(word);
+                dict[word] = true;
             }
         }
     } else {
@@ -29,7 +31,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
     std::uniform_int_distribution<size_t> dist(0, dict.size() - 1);
     size_t random_index = dist(mt);
 
-    std::string answer = dict[random_index];
+    std::string answer = available_words[random_index];
     std::map<char, bool> exists;
     for (auto &c : answer) {
         exists[c] = true;
@@ -49,10 +51,16 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
             return PAM_PERM_DENIED;
         }
 
+        if (dict.find(guess) == dict.end()) {
+            fprintf(stdout, "%s is not in word list\r\n", guess.c_str());
+            i -= 1;
+            continue;
+        }
+
         std::string result;
         for (int j = 0; j < 5; ++j) {
             if (answer[j] == guess[j]) {
-                result += "\033[92;102m██\033[m";
+                result += "\033[92;102m██\033[m ";
             } else if (exists[guess[j]]) {
                 result += "\033[93;103m██\033[m ";
             } else {
@@ -80,6 +88,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
         if (guess == answer) {
             return PAM_SUCCESS;
         }
+        guess = "";
     }
 
     fprintf(stderr, "Maximum number of guess reached. It was %s\r\n", answer.c_str());
