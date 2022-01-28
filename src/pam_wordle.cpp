@@ -9,6 +9,12 @@
 #include <fstream>
 #include <random>
 
+unsigned char ascii_tolower(unsigned char in) {
+    if (in <= 'Z' && in >= 'A')
+        return in - ('Z' - 'z');
+    return in;
+}
+
 PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, const char **argv)
 {
     std::ifstream ifs;
@@ -20,7 +26,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
         while(std::getline(ifs, word)) {
             if (word.length() == 5) {
                 std::transform(word.begin(), word.end(), word.begin(),
-                               [](unsigned char c){ return std::tolower(c); });
+                               [](unsigned char c){ return ascii_tolower(c); });
                 available_words.push_back(word);
                 dict[word] = true;
             }
@@ -59,7 +65,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
         }
 
         std::transform(guess.begin(), guess.end(), guess.begin(),
-                       [](unsigned char c){ return std::tolower(c); });
+                       [](unsigned char c){ return ascii_tolower(c); });
 
         if (dict.find(guess) == dict.end()) {
             fprintf(stdout, "%s is not in word list\r\n", guess.c_str());
