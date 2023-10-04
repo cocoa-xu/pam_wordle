@@ -61,7 +61,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
 
         if (guess.length() != 5) {
             fprintf(stderr, "Please input a word with 5 letters.\r\n");
-            return PAM_PERM_DENIED;
+            continue;
         }
 
         std::transform(guess.begin(), guess.end(), guess.begin(),
@@ -107,7 +107,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *handle, int flags, int argc, co
         guess = "";
     }
 
-    fprintf(stderr, "Maximum number of guesses reached. It was %s\r\n", answer.c_str());
+    fprintf(stdout, "Maximum number of guesses reached. It was %s\r\n", answer.c_str());
     return PAM_PERM_DENIED;
 }
 

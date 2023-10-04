@@ -18,7 +18,9 @@ So, let's practice more on the game, [wordle](https://www.powerlanguage.co.uk/wo
 ## Compile
 ```shell
 git clone --depth=1 https://github.com/cocoa-xu/pam_wordle
+cd pam_wordle
 mkdir -p build
+cd build
 cmake -D CMAKE_BUILD_TYPE=Release ..
 make
 ```
